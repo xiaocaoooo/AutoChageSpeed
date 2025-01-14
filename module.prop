@@ -1,8 +1,7 @@
 id=AutoChageSpeed
 name=自动充电调速
-version=v1.0
-versionCode=1
+version=v1.0.0
+versionCode=10000
 author=「氧化钙」
 description=自动充电调速
-#updateJson=https://***updateJson.json
-#updateJson为远程更新直链(新API)，文件格式为json，具体json请查阅updateJson.json
+updateJson=https://github.com/xiaocaoooo/AutoChageSpeed/raw/refs/heads/master/updateJson.json
