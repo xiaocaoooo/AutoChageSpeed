@@ -11,7 +11,7 @@ wait_until_login() {
         sleep 5
     done
 
-    local test_file="/sdcard/Android/.PERMISSION_TEST_AutoChageSpeed"
+    local test_file="/sdcard/Android/.PERMISSION_TEST_autochagespeed"
     true >"$test_file"
     while [ ! -f "$test_file" ]; do
         sleep 5
@@ -30,7 +30,7 @@ cp -f "$MODDIR/backup.prop" "$MODDIR/module.prop"
 while true; do
 
     # 读取配置文件和系统数据到变量
-    source /sdcard/Android/AutoChageSpeed/config.txt
+    source /sdcard/Android/autochagespeed/config.txt
 
     status=$(cat /sys/class/power_supply/battery/status)
     capacity=$(cat /sys/class/power_supply/battery/capacity)
