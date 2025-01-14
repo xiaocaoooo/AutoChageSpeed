@@ -1,7 +1,7 @@
 id=autochagespeed
 name=自动充电调速
-version=v1.0
-versionCode=1
+version=v1.0.0
+versionCode=10000
 author=「氧化钙」
 description=自动充电调速
 #updateJson=https://***updateJson.json
