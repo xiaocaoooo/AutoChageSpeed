@@ -25,7 +25,7 @@ wait_until_login
 echo $(date) "模块启动" > "$MODDIR"/log.log
 chmod 777 /sys/class/power_supply/*/*
 lasthint="DisCharging"
-cp -f "$MODDIR/backup.prop" "$MODDIR/module.prop"
+# cp -f "$MODDIR/backup.prop" "$MODDIR/module.prop"
 
 while true; do
 
