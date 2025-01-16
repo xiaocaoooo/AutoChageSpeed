@@ -125,6 +125,7 @@ while true; do
         echo ${target_set_current} > /sys/class/power_supply/battery/current_max
         echo ${target_set_current} > /sys/class/power_supply/pc_port/current_max
         echo ${target_set_current} > /sys/class/power_supply/qpnp-dc/current_max
+        sleep 0.1
     elif [ "$status" = "Discharging" ]; then
         sleep 60
     fi
@@ -137,6 +138,5 @@ while true; do
         sed -i "/^description=/c description=[ 当前状态:${hint} ] 自动充电调速" "$MODDIR/module.prop"
     fi
     lasthint=$hint
-    sleep 1
 done
 exit
