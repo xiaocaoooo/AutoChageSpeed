@@ -106,33 +106,37 @@ while true; do
 
     show_target_set_current=$(($target_set_current / 1000))
 
-    sed -i "/^description=/c description=[ 当前状态:${hint} 目标:${show_target_set_current}mA 实际:${show_current}mA 温度:${show_temp}℃ ] 自动充电调速" "$MODDIR/module.prop"
-    
-    # echo '0' > /sys/class/power_supply/battery/input_current_limited
-    # echo '1' > /sys/class/power_supply/usb/boost_current
-    echo ${target_set_current} > /sys/class/power_supply/usb/ctm_current_max
-    echo ${target_set_current} > /sys/class/power_supply/usb/current_max
-    echo ${target_set_current} > /sys/class/power_supply/usb/sdp_current_max
-    echo ${target_set_current} > /sys/class/power_supply/usb/hw_current_max
-    echo ${target_set_current} > /sys/class/power_supply/usb/constant_charge_current
-    echo ${target_set_current} > /sys/class/power_supply/usb/constant_charge_current_max
-    echo ${target_set_current} > /sys/class/power_supply/main/current_max
-    echo ${target_set_current} > /sys/class/power_supply/main/constant_charge_current_max
-    echo ${target_set_current} > /sys/class/power_supply/dc/current_max
-    echo ${target_set_current} > /sys/class/power_supply/dc/constant_charge_current_max
-    echo ${target_set_current} > /sys/class/power_supply/battery/constant_charge_current_max
-    echo ${target_set_current} > /sys/class/power_supply/battery/constant_charge_current
-    echo ${target_set_current} > /sys/class/power_supply/battery/current_max
-    echo ${target_set_current} > /sys/class/power_supply/pc_port/current_max
-    echo ${target_set_current} > /sys/class/power_supply/qpnp-dc/current_max
+    if [ "$status" = "Charging" ]; then
+        sed -i "/^description=/c description=[ 当前状态:${hint} 目标:${show_target_set_current}mA 实际:${show_current}mA 温度:${show_temp}℃ ] 自动充电调速" "$MODDIR/module.prop"
+        # echo '0' > /sys/class/power_supply/battery/input_current_limited
+        # echo '1' > /sys/class/power_supply/usb/boost_current
+        echo ${target_set_current} > /sys/class/power_supply/usb/ctm_current_max
+        echo ${target_set_current} > /sys/class/power_supply/usb/current_max
+        echo ${target_set_current} > /sys/class/power_supply/usb/sdp_current_max
+        echo ${target_set_current} > /sys/class/power_supply/usb/hw_current_max
+        echo ${target_set_current} > /sys/class/power_supply/usb/constant_charge_current
+        echo ${target_set_current} > /sys/class/power_supply/usb/constant_charge_current_max
+        echo ${target_set_current} > /sys/class/power_supply/main/current_max
+        echo ${target_set_current} > /sys/class/power_supply/main/constant_charge_current_max
+        echo ${target_set_current} > /sys/class/power_supply/dc/current_max
+        echo ${target_set_current} > /sys/class/power_supply/dc/constant_charge_current_max
+        echo ${target_set_current} > /sys/class/power_supply/battery/constant_charge_current_max
+        echo ${target_set_current} > /sys/class/power_supply/battery/constant_charge_current
+        echo ${target_set_current} > /sys/class/power_supply/battery/current_max
+        echo ${target_set_current} > /sys/class/power_supply/pc_port/current_max
+        echo ${target_set_current} > /sys/class/power_supply/qpnp-dc/current_max
+    elif [ "$status" = "Discharging" ]; then
+        sleep 60
+    fi
 
     #写入日志
 
     if [[ $lasthint != $hint ]]
     then
         echo $(date) $hint"事件" >> "$MODDIR"/log.log
+        sed -i "/^description=/c description=[ 当前状态:${hint} ] 自动充电调速" "$MODDIR/module.prop"
     fi
     lasthint=$hint
-    sleep 2
+    sleep 1
 done
 exit
